@@ -269,4 +269,5 @@ gaps outer 1
 # Shortcut for Lockscreen
 bindsym $mod+x exec $HOME/.config/i3/lock
 
+exec --no-startup-id --bg-scale ~/.config/wall
 exec --no-startup-id picom &

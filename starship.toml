@@ -12,8 +12,13 @@ right_format = """$all"""
 # disabled = true
 
 [directory.substitutions]
-'~/tests/starship-custom' = 'work-project'
+#'~/tests/starship-custom' = 'work-project'
 
+[battery]
+full_symbol = '🔋 '
+charging_symbol = '⚡️ '
+discharging_symbol = '💀 '
+format = '[$symbol$percentage]($style) '
 
 [aws]
 format = 'on [$symbol($profile )(\($region\) )]($style)'
