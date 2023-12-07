@@ -1,7 +1,12 @@
+autostart/
 dconf/
 freerdp/
+keepassxc/
 mimeapps.list
+okularrc
+onlyoffice/
 QtProject.conf
 remmina/
 spotify/
-onlyoffice/
+zoom.conf
+zoomus.conf
