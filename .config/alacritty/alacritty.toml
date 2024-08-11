@@ -1,0 +1,76 @@
+live_config_reload = true
+
+[bell]
+animation = "EaseOutExpo"
+duration = 0
+
+[colors]
+# draw_bold_text_with_bright_colors = true
+
+[colors.bright]
+black   = '#002d38' #color.base03
+red     = '#f65351' #color.red300
+green   = '#b7fa00' #color.green300
+yellow  = '#ffbf00' #color.yellow300
+blue    = '#47adf5' #color.blue300
+magenta = '#f254a1' #color.magenta300
+cyan    = '#2beede' #color.cyan300
+white   = '#fdf6e2' #color.base3
+
+[colors.normal]
+black   = '#00141a' #color.base04
+red     = '#dc312e' #color.red
+green   = '#859900' #color.green
+yellow  = '#b38600' #color.yellow
+blue    = '#278bd3' #color.blue
+magenta = '#d33682' #color.magenta
+cyan    = '#2aa298' #color.cyan
+white   = '#ede7d4' #color.base2
+
+[colors.primary]
+background = '#00141a' #color.base04
+foreground = '#839495' #color.fg
+
+[env]
+TERM = "xterm-256color"
+
+[font]
+size = 9
+
+[font.normal]
+family = "JetBrainsMono Nerd Font"
+style = "Regular"
+
+[font.bold]
+family = "JetBrainsMono Nerd Font"
+style = "Bold"
+
+[font.italic]
+family = "JetBrainsMono Nerd Font"
+
+[font.offset]
+x = 0
+y = 0
+
+[font.glyph_offset]
+x = 0
+y = 0
+
+[mouse]
+hide_when_typing = true
+
+[[mouse.bindings]]
+action = "PasteSelection"
+mouse = "Middle"
+
+[shell]
+program = "/bin/zsh"
+
+[window]
+decorations = "None"
+opacity = 0.7
+blur = true
+
+[window.padding]
+x = 0
+y = 0
