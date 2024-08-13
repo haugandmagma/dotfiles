@@ -78,6 +78,7 @@ alias ll='eza -l -g --icons'
 alias lla='ll -a'
 alias vim='nvim'
 alias c='clear'
+alias cat='bat'
 alias ide='~/.scripts/ide'
 
 # Shell integrations
