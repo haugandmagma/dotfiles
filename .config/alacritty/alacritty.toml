@@ -29,7 +29,8 @@ white = '#ede7d4'   #color.base2
 
 [colors.primary]
 background = '#00141a' #color.base04
-foreground = '#839495' #color.fg
+# foreground = '#839495' #color.fg
+foreground = '#9eacad' #color.base0
 
 [env]
 TERM = "xterm-256color"
@@ -68,7 +69,7 @@ program = "/bin/zsh"
 
 [window]
 decorations = "None"
-opacity = 0.7
+opacity = 0.9
 blur = true
 
 [window.padding]
