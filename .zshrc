@@ -78,8 +78,11 @@ alias ll='eza -l -g --icons'
 alias lla='ll -a'
 alias vim='nvim'
 alias c='clear'
-alias cat='bat'
+# alias cat='bat'
 alias ide='~/.scripts/ide'
+alias kmap='~/.scripts/keymap'
+alias suck='sudo cp config.def.h config.h && sudo make clean install'
+alias out='pkill -KILL -u $USER'
 
 # Shell integrations
 eval "$(fzf --zsh)"
