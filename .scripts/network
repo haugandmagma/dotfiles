@@ -1,0 +1,101 @@
+#!/bin/bash
+#
+# # Function to convert dBm to percentage
+# dBm_to_percentage() {
+#   local dBm=$1
+#   if [ "$dBm" -ge -50 ]; then
+#     echo 100
+#   elif [ "$dBm" -le -100 ]; then
+#     echo 0
+#   else
+#     # Linear interpolation between -50 dBm (100%) and -100 dBm (0%)
+#     echo $(((dBm + 100) * 100 / 50))
+#   fi
+# }
+#
+# # Function to get Wi-Fi ESSID and signal strength
+# get_wifi_info() {
+#   # Get the ESSID
+#   ESSID=$(iwgetid -r)
+#
+#   # Get the signal strength in dBm
+#   SIGNAL=$(iwconfig 2>/dev/null | grep 'Signal level=' | awk -F'=' '{print $3}' | awk '{print $1}' | sed 's/dBm//')
+#
+#   # Convert signal strength to percentage
+#   if [ -n "$SIGNAL" ]; then
+#     SIGNAL_PERCENTAGE=$(dBm_to_percentage "$SIGNAL")
+#   else
+#     SIGNAL_PERCENTAGE="N/A"
+#   fi
+#
+#   # Check if ESSID is available
+#   if [ -z "$ESSID" ]; then
+#     ESSID="No Wi-Fi"
+#   fi
+#
+#   # Determine the icon based on signal percentage
+#   if [ "$SIGNAL_PERCENTAGE" -ge 90 ]; then
+#     ICON="strong" # Excellent signal
+#   elif [ "$SIGNAL_PERCENTAGE" -ge 75 ]; then
+#     ICON="good" # Good signal
+#   elif [ "$SIGNAL_PERCENTAGE" -ge 50 ]; then
+#     ICON="fair" # Fair signal
+#   elif [ "$SIGNAL_PERCENTAGE" -ge 25 ]; then
+#     ICON="poor" # Poor signal
+#   else
+#     ICON="no" # No signal
+#   fi
+#
+#   # Output the result
+#   # echo "$ICON Wi-Fi: $ESSID | Signal: ${SIGNAL_PERCENTAGE}%"
+#   echo "📶 Connected to $ESSID with $ICON signal"
+# }
+#
+# # Call the function and display the result
+# get_wifi_info
+
+# ssid=$(iwgetid -r)
+# case "$(cat /sys/class/net/wlan1/operstate 3>/dev/null)" in
+# up)
+#   printf "󰖩 "
+#   ;;
+# down)
+#   printf "󰖪 %s" "No Wifi"
+#   ;;
+# esac
+
+# Show wifi 📶 and percent strength or 📡 if none.
+# Show 🌐 if connected to ethernet or ❎ if none.
+# Show 🔒 if a vpn connection is active
+
+# case $BLOCK_BUTTON in
+# 1)
+#   "$TERMINAL" -e nmtui
+#   pkill -RTMIN+4 dwmblocks
+#   ;;
+# 3) notify-send "🌐 Internet module" "\- Click to connect
+#  : wifi disabled
+# 󰖪 : no wifi connection
+#  : wifi connection with quality
+#  : no ethernet
+#  : ethernet working
+# 🔒: vpn is active
+# " ;;
+# 6) setsid -f "$TERMINAL" -e "$EDITOR" "$0" ;;
+# esac
+
+# Wifi
+if [ "$(cat /sys/class/net/w*/operstate 2>/dev/null)" = 'up' ]; then
+  # wifiicon="$(awk '/^\s*w/ { print "📶", int($3 * 100 / 70) "% " }' /proc/net/wireless)"
+  wifiicon="  $(iwgetid -r)"
+elif [ "$(cat /sys/class/net/w*/operstate 2>/dev/null)" = 'down' ]; then
+  [ "$(cat /sys/class/net/w*/flags 2>/dev/null)" = '0x1003' ] && wifiicon=" " || wifiicon="❌ "
+fi
+
+# Ethernet
+[ "$(cat /sys/class/net/e*/operstate 2>/dev/null)" = 'up' ] && ethericon="  " || ethericon=""
+
+# TUN
+[ -n "$(cat /sys/class/net/tun*/operstate 2>/dev/null)" ] && tunicon="🔒 "
+
+printf "%s%s%s\n" "$tunicon" "$ethericon" "$wifiicon"

@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Function to get volume and mute status
+get_volume_status() {
+  # Get the volume and mute status using pactl
+  volume_info=$(pactl list sinks | grep -E 'Volume:|Mute:')
+
+  # Initialize variables
+  volume=""
+  mute=""
+
+  # Parse the output
+  while read -r line; do
+    if [[ $line == Volume:* ]]; then
+      volume=$(echo $line | awk '{print $5}' | tr -d '%')
+    elif [[ $line == Mute:* ]]; then
+      mute=$(echo $line | awk '{print $2}')
+    fi
+  done <<<"$volume_info"
+
+  # Check mute status and prepare output
+  if [[ $mute == "yes" ]]; then
+    # If muted, show mute icon only
+    mute_icon=" Muted" # Muted icon
+    echo "$mute_icon"
+  else
+    # If unmuted, show volume percentage and volume icon
+    volume_icon=" " # Volume icon
+    echo "$volume_icon $volume%"
+  fi
+}
+
+# Call the function and display the result
+get_volume_status

@@ -1,0 +1,16 @@
+#!/bin/bash
+
+# Get the current keymap
+current_keymap=$(setxkbmap -query | grep layout | awk '{print $2}')
+
+# Toggle between JP and US keymaps
+if [ "$current_keymap" == "us" ]; then
+  setxkbmap jp
+  echo "Switched to Japanese keymap."
+elif [ "$current_keymap" == "jp" ]; then
+  setxkbmap us
+  echo "Switched to US keymap."
+else
+  echo "Current keymap is neither US nor JP. Setting to US by default."
+  setxkbmap us
+fi

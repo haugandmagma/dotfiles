@@ -1,0 +1,11 @@
+#!/bin/bash
+
+while true; do
+    # Check if the current window is in fullscreen mode
+    if xprop -root _NET_ACTIVE_WINDOW | grep -q "_NET_WM_STATE_FULLSCREEN"; then
+        # Keep the screen active
+        xdotool mousemove 0 0 mousemove restore
+    fi
+    sleep 60
+done
+

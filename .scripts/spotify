@@ -1,0 +1,32 @@
+#!/bin/bash
+
+# Function to get the current Spotify status using playerctl
+get_spotify_status() {
+
+  # Get the current track information
+  title=$(playerctl -p spotify metadata title 2>/dev/null)
+  artist=$(playerctl -p spotify metadata artist 2>/dev/null)
+  status=$(playerctl -p spotify status 2>/dev/null)
+
+  # Check if Spotify is running
+  if [[ -z "$title" || -z "$artist" ]]; then
+    echo " "
+  else
+    # Define color codes in slstatus format
+    COLOR_TEXT="^c#859900^" # Color for bright text
+    COLOR_FADE="^c#586e75^" # Color for bright text
+    COLOR_LOGO="^c#1db954^" # Color for logo
+    COLOR_RESET="^d^"       # Reset color
+
+    # Format the output based on the playback status
+    if [[ "$status" == "Playing" ]]; then
+      echo -e "${COLOR_LOGO} ${COLOR_RESET} ${COLOR_TEXT}$title${COLOR_RESET} by ${COLOR_TEXT}$artist${COLOR_RESET}"
+    else
+      [[ "$status" == "Paused" ]]
+      echo -e "${COLOR_FADE}  $title by $artist${COLOR_RESET}"
+    fi
+  fi
+}
+
+# Call the function and output the result
+get_spotify_status
