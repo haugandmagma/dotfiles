@@ -1,14 +1,31 @@
 [global]
+    alignment = left
     font = "JetBrainsMono Nerd Font 9"
-    background = "#00141a"
-    foreground = "#9eacad"
+    format = "<b>%s</b>\n%b"
     frame_color = "#002b36"
-    frame_width = 1
-    timeout = 4
-    word_wrap = true
-
-[general]
+    frame_width = 3
+    height = 200
+    hide_duplicate_count = true
+    horizontal_padding = 16
+    icon_path = "<path>"
     icon_position = left
+    idle_threshold = 120
+    ignore_newline = false
+    line_height = 4
+    markup = full
+    follow = mouse
+    offset = "50x50"
+    origin = top-right
+    padding = 16
+    separator_color = frame
+    show_indicators = true
+    shrink = true
+    sort = true
+    stack_duplicates = true
+    transparency = 10
+    vertical_alignment = center
+    width = 300
+    word_wrap = true
 
 [urgency_low]
     background = "#00141a"
@@ -17,11 +34,12 @@
 
 [urgency_normal]
     background = "#00141a"
-    foreground = "#859900"
+    foreground = "#9eacad"
     timeout = 4
 
 [urgency_critical]
     background = "#00141a"
-    foreground = "#d33682"
+    foreground = "#859900"
+    frame_color = "#9eacad"
     timeout = 10
 
