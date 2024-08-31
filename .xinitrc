@@ -47,7 +47,7 @@ xinput set-prop "$DEVICE" "libinput Natural Scrolling Enabled" 1
 xinput set-prop "$DEVICE" "libinput Disable While Typing Enabled" 1
 
 # Wallpaper
-feh --bg-fill /home/muhamad/.config/wall &
+feh --bg-fill /home/muhamad/.config/background &
 
 slstatus &
 picom -f &
