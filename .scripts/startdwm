@@ -1,0 +1,9 @@
+#!/bin/sh
+
+# Source the .xinitrc file
+if [ -f "$HOME/.xinitrc" ]; then
+    . "$HOME/.xinitrc"
+fi
+
+# Start DWM
+exec dwm
