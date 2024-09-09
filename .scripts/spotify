@@ -13,8 +13,8 @@ get_spotify_status() {
     echo " "
   else
     # Define color codes in slstatus format
-    COLOR_TEXT="^c#2aa198^" # Color for bright text
-    COLOR_FADE="^c#586e75^" # Color for bright text
+    COLOR_TEXT="^c#5d3fd3^" # Color for bright text
+    COLOR_FADE="^c#444444^" # Color for bright text
     COLOR_LOGO="^c#1db954^" # Color for logo
     COLOR_RESET="^d^"       # Reset color
 
