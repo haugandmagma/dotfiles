@@ -2,7 +2,7 @@
     alignment = left
     font = "JetBrainsMono Nerd Font 9"
     format = "<b>%s</b>\n%b"
-    frame_color = "#005577"
+    frame_color = "#202020"
     frame_width = 2
     height = 200
     hide_duplicate_count = true
@@ -28,18 +28,18 @@
     word_wrap = true
 
 [urgency_low]
-    background = "#222222"
-    foreground = "#bbbbbb"
+    background = "#000000"
+    foreground = "#dddfff"
     timeout = 4
 
 [urgency_normal]
-    background = "#222222"
-    foreground = "#bbbbbb"
+    background = "#000000"
+    foreground = "#dddfff"
     timeout = 4
 
 [urgency_critical]
-    background = "#222222"
-    foreground = "#bbbbbb"
-    frame_color = "#5c5cff"
+    background = "#000000"
+    foreground = "#dddfff"
+    frame_color = "#5d3fd3"
     timeout = 10
 
