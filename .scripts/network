@@ -1,17 +1,21 @@
 #!/bin/bash
 
+COLOR_FADE="^c#444444^"
+COLOR_RESET="^d^"
+
 # Wifi
 if [ "$(cat /sys/class/net/w*/operstate 2>/dev/null)" = 'up' ]; then
-  # wifiicon="$(awk '/^\s*w/ { print "📶", int($3 * 100 / 70) "% " }' /proc/net/wireless)"
-  wifiicon="  $(iwgetid -r)"
+  wifi_ssid="$(iwgetid -r)"
+  wifi_signal="$(iwconfig 2>/dev/null | grep -i 'signal level' | awk -F 'level=' '{print $2}' | awk '{print $1}')"
+  wifiicon="  $wifi_ssid ${COLOR_FADE}($wifi_signal dBm)${COLOR_RESET}"
 elif [ "$(cat /sys/class/net/w*/operstate 2>/dev/null)" = 'down' ]; then
-  [ "$(cat /sys/class/net/w*/flags 2>/dev/null)" = '0x1003' ] && wifiicon=" " || wifiicon="❌ "
+  [ "$(cat /sys/class/net/w*/flags 2>/dev/null)" = '0x1003' ] && wifiicon=" " || wifiicon="❌"
 fi
 
 # Ethernet
 [ "$(cat /sys/class/net/e*/operstate 2>/dev/null)" = 'up' ] && ethericon="  " || ethericon=""
 
 # TUN
-[ -n "$(cat /sys/class/net/vpn*/operstate 2>/dev/null)" ] && tunicon="  "
+[ -n "$(cat /sys/class/net/vpn*/operstate 2>/dev/null)" ] && tunicon=" "
 
 printf "%s%s%s\n" "$tunicon" "$ethericon" "$wifiicon"
