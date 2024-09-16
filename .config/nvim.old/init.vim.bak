@@ -1,0 +1,82 @@
+lua vim.loader.enable()
+
+set nocompatible
+filetype plugin indent on
+syntax enable
+
+set number
+set relativenumber
+set colorcolumn=-0
+set cursorline
+set scrolloff=999
+set autoindent
+set smartindent
+set tabstop=4
+set shiftwidth=2
+set expandtab
+set history=1000
+set ruler
+set cmdheight=1
+set ttyfast
+set nowrap
+set mouse=a
+set clipboard+=unnamedplus
+set hidden
+
+set autoread
+set updatecount=0
+set wildmode=longest,list,full
+set diffopt=filler,vertical
+set conceallevel=0
+
+" theme
+set termguicolors
+set bg=dark
+colorscheme quiet
+highlight Keyword gui=bold
+highlight Comment gui=italic
+highlight Constant guifg=#999999
+highlight NormalFloat guibg=#333333
+
+" remap key
+nnoremap <Space> <Nop>
+let mapleader = ' '
+let maplocalleader = ' '
+nnoremap <Leader>t <C-]> " jump to tag
+
+nnoremap te :tabedit
+nnoremap <tab> :tabnext<Return>
+nnoremap <s-tab> :tabprev<Return>
+
+nnoremap <Leader>pv :Ex<Return>
+
+map <C-c> <Esc>
+imap <C-c> <Esc>
+
+nnoremap <C-s> :w<Return>
+nnoremap qq :q!<Return>
+
+let s:hidden_all = 0
+function! ToggleHiddenAll()
+    if s:hidden_all  == 0
+        let s:hidden_all = 1
+        set noshowmode
+        set noruler
+        set laststatus=0
+        set noshowcmd
+    else
+        let s:hidden_all = 0
+        set showmode
+        set ruler
+        set laststatus=2
+        set showcmd
+    endif
+endfunction
+nnoremap <leader>h :call ToggleHiddenAll()<CR>
+
+inoremap { {}<Left>
+inoremap ( ()<Left>
+inoremap [ []<Left>
+inoremap ' ''<Left>
+inoremap " ""<Left>
+inoremap < <><Left>
