@@ -9,56 +9,45 @@ sysmodmap=/etc/X11/xinit/.Xmodmap
 
 if [ -f $sysresources ]; then
 
-  xrdb -merge $sysresources
+    xrdb -merge $sysresources
 
 fi
 
 if [ -f $sysmodmap ]; then
-  xmodmap $sysmodmap
+    xmodmap $sysmodmap
 fi
 
 if [ -f "$userresources" ]; then
 
-  xrdb -merge "$userresources"
+    xrdb -merge "$userresources"
 
 fi
 
 if [ -f "$usermodmap" ]; then
-  xmodmap "$usermodmap"
+    xmodmap "$usermodmap"
 fi
 
 # start some nice programs
 
-if [ -d /etc/X11/xinit/xinitrc.d ]; then
-  for f in /etc/X11/xinit/xinitrc.d/?*.sh; do
-    [ -x "$f" ] && . "$f"
-  done
-  unset f
+if [ -d /etc/X11/xinit/xinitrc.d ] ; then
+ for f in /etc/X11/xinit/xinitrc.d/?*.sh ; do
+  [ -x "$f" ] && . "$f"
+ done
+ unset f
 fi
 
-# Keyboard layout
-setxkbmap jp &
-setxkbmap -option ctrl:swapcaps &
+if xrandr | grep "HDMI-1 connected"; then
+    xrandr --output eDP-1 --off
+fi
 
-# Set touchpad properties
-DEVICE="9"
-xinput set-prop "$DEVICE" "libinput Tapping Enabled" 1
-xinput set-prop "$DEVICE" "libinput Natural Scrolling Enabled" 1
-xinput set-prop "$DEVICE" "libinput Disable While Typing Enabled" 1
-
-# Wallpaper
-feh --bg-fill /home/muhamad/.config/background &
-
+# dwmblocks &
 slstatus &
-picom -f &
-xss-lock -- slock &
-caffeine &
+feh --bg-fill /home/user/.config/bg &
+picom &
 dunst &
 
-# Loop
 while true; do
-  dwm >/dev/null 2>&1
+    dwm >/dev/null 2>&1
 done
 
-# Execute DWM
 exec dwm
