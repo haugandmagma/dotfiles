@@ -1,0 +1,25 @@
+#!/bin/bash
+
+# Function to get the current brightness
+get_brightness() {
+  # Check for available backlight interfaces
+  if [ -d /sys/class/backlight ]; then
+    # Get the first backlight device (you may need to adjust this for your system)
+    backlight_device=$(ls /sys/class/backlight | head -n 1)
+
+    # Read the current brightness and max brightness
+    current_brightness=$(cat /sys/class/backlight/$backlight_device/brightness)
+    max_brightness=$(cat /sys/class/backlight/$backlight_device/max_brightness)
+
+    # Calculate the brightness percentage
+    brightness_percentage=$((current_brightness * 100 / max_brightness))
+
+    # Output the brightness percentage
+    echo " $brightness_percentage%"
+  else
+    echo "No backlight interface found."
+  fi
+}
+
+# Call the function and display the result
+get_brightness

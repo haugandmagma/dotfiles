@@ -1,0 +1,79 @@
+#!/bin/sh
+
+# Define a temporary file to store the last charging state
+STATE_FILE="/tmp/battery_state.txt"
+LAST_NOTIFICATION_FILE="/tmp/last_notification_state.txt"
+
+# Get battery information
+battery1=$(cat /sys/class/power_supply/BAT0/capacity)
+battery2=$(cat /sys/class/power_supply/BAT1/capacity)
+
+# Get battery state
+state1=$(cat /sys/class/power_supply/BAT0/status)
+state2=$(cat /sys/class/power_supply/BAT1/status)
+
+# Calculate average battery percentage
+average_battery=$(( (battery1 + battery2) / 2 ))
+
+# Determine overall state
+if [ "$state1" = "Charging" ] || [ "$state2" = "Charging" ]; then
+  overall_state="" # Charging icon
+  current_notification="charging"
+
+  # Check if the last notification was not "charging"
+  if [ ! -f "$LAST_NOTIFICATION_FILE" ] || [ "$(cat "$LAST_NOTIFICATION_FILE")" != "$current_notification" ]; then
+    notify-send "Battery Charging" "Your battery is charging. Current level: $average_battery%."
+    echo "$current_notification" > "$LAST_NOTIFICATION_FILE" # Update the last notification state
+  fi
+
+  # Check if the battery is fully charged (100%)
+  if [ "$average_battery" -eq 100 ]; then
+    current_notification="full"
+    if [ "$(cat "$LAST_NOTIFICATION_FILE")" != "$current_notification" ]; then
+      notify-send "Battery Full" "Your battery is fully charged at $average_battery%."
+      echo "$current_notification" > "$LAST_NOTIFICATION_FILE" # Update the last notification state
+    fi
+  fi
+
+else
+  # Reset the state file if not charging
+  if [ -f "$STATE_FILE" ]; then
+    rm "$STATE_FILE"
+  fi
+
+  COLOR_CRITICAL="^c#dc322f^"
+  COLOR_RESET="^d^"
+
+  # Determine icon based on battery percentage
+  if [ "$average_battery" -ge 90 ]; then
+    overall_state="" # Full battery icon
+    current_notification="full"
+    if [ "$(cat "$LAST_NOTIFICATION_FILE")" != "$current_notification" ]; then
+      notify-send "Battery Full" "Your battery is fully charged at $average_battery%."
+      echo "$current_notification" > "$LAST_NOTIFICATION_FILE" # Update the last notification state
+    fi
+  elif [ "$average_battery" -ge 75 ]; then
+    overall_state="" # Three-quarters battery icon
+    current_notification="normal"
+  elif [ "$average_battery" -ge 50 ]; then
+    overall_state="" # Half battery icon
+    current_notification="normal"
+  elif [ "$average_battery" -ge 25 ]; then
+    overall_state="" # Low battery icon
+    current_notification="normal"
+    # if [ "$(cat "$LAST_NOTIFICATION_FILE")" != "$current_notification" ]; then
+    #   notify-send "Battery Low" "Your battery is low at $average_battery%. Please charge soon."
+    #   echo "$current_notification" > "$LAST_NOTIFICATION_FILE" # Update the last notification state
+    # fi
+  else
+    overall_state="${COLOR_CRITICAL}${COLOR_RESET}" # Critical battery icon
+    current_notification="critical"
+    if [ "$(cat "$LAST_NOTIFICATION_FILE")" != "$current_notification" ]; then
+      notify-send "Battery Critical" "Your battery is critical at $average_battery%. Please charge immediately."
+      echo "$current_notification" > "$LAST_NOTIFICATION_FILE" # Update the last notification state
+    fi
+  fi
+fi
+
+# Output the combined battery status
+echo "$overall_state $average_battery%"

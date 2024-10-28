@@ -1,0 +1,29 @@
+#!/bin/sh
+
+case $1 in
+"status")
+    output=$(xset q)
+    if printf "%s\n" "$output" | grep -q "DPMS is Disabled"; then
+        printf ""
+    else
+        printf " "
+    fi
+    ;;
+"toggle")
+    if xset -q | grep -q "DPMS is Disabled"; then
+        # If DPMS is disabled, enable it
+        xset +dpms
+        xset s on
+        printf "DPMS enabled and screen saver turned on.\n"
+    else
+        # If DPMS is enabled, disable it
+        xset -dpms
+        xset s off
+        printf "DPMS disabled and screen saver turned off.\n"
+    fi
+    ;;
+*)
+    printf "Usage: $0 {status|toggle}"
+    exit 1
+    ;;
+esac

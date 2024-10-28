@@ -1,0 +1,45 @@
+#!/bin/sh
+
+# case $1 in
+# 	"status")
+# 		# Get the current default source (microphone)
+# 		DEFAULT_SOURCE=$(pactl get-default-source)
+# 		# Get the mute status of the microphone
+# 		MUTED=$(pactl list sources | awk -v source="$DEFAULT_SOURCE" '/^Source Name: / {if ($3 == source) {getline; print $2}}' | grep -o 'yes\|no')
+# 		if [ "$MUTED" = "no" ]; then
+# 			echo ''  # Icon for microphone on
+# 		else
+# 			echo ''  # Icon for microphone muted
+# 		fi
+# 		;;
+# 	"toggle")
+# 		# Toggle the mute status of the microphone
+# 		pactl set-source-mute "$(pactl get-default-source)" toggle
+# 		;;
+# 	*)
+# 		echo "Usage: $0 {status|toggle}"  # Help message for incorrect usage
+# 		exit 1
+# 		;;
+# esac
+
+case $1 in
+"status")
+  # Get the current default source (microphone)
+  DEFAULT_SOURCE=$(pactl get-default-source)
+  # Get the mute status of the microphone
+  MUTED=$(pactl get-source-mute "$DEFAULT_SOURCE" | awk '{print $2}')
+  if [ "$MUTED" = "no" ]; then
+    echo "" # Icon for microphone on
+  else
+    echo "" # Icon for microphone muted
+  fi
+  ;;
+"toggle")
+  # Toggle the mute status of the microphone
+  pactl set-source-mute "$(pactl get-default-source)" toggle
+  ;;
+*)
+  echo "Usage: $0 {status|toggle}" # Help message for incorrect usage
+  exit 1
+  ;;
+esac
